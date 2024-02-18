@@ -1,0 +1,46 @@
+<app-search></app-search>
+<app-tags></app-tags>
+<app-not-found [visible]="!foods || !foods.length" resetLinkText="Reset Search"></app-not-found>
+<ul>
+    <li *ngFor="let food of foods">
+        <a routerLink="/food/{{food.id}}">
+            <img [src]="food.imageUrl" [alt]="food.name"/>
+            <div class="content">
+                <div class="name">
+                    {{food.name}}
+                </div>
+                <span class="favorite">
+                    {{food.favorite ? '❤' : '🤍'}}
+                </span>
+                <div class="stars">
+                    <ng-template #t let-fill="fill">
+                        <i class="bi-star-fill">
+                            @if (fill > 0) {
+                                <i class="bi-star-fill filled" [style.width.%]="fill"></i>
+                            }
+                        </i>
+                    </ng-template>
+                    
+                    <ngb-rating [(rate)]="food.stars" [starTemplate]="t" [readonly]="true" [max]="5"/>
+                </div>
+                <div class="product-item-footer">
+                    <div class="origins">
+                        <span *ngFor="let origin of food.origins">
+                            {{origin}}
+                        </span>
+                    </div>
+                    <div class="cook-time">
+                        <span>🕑</span>
+                        {{food.cookTime}}
+                    </div>
+                </div>
+
+                <div class="price">
+                    <span>
+                        {{food.price | currency}}
+                    </span>
+                </div>
+            </div>
+        </a>
+    </li>
+</ul>
